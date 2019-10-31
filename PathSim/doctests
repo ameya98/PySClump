@@ -1,0 +1,23 @@
+>>> from pathsim import PathSim
+>>> import numpy as np
+
+>>> type_lists = {
+...    'A': ['Mike', 'Jim', 'Mary', 'Bob', 'Ann'],
+...    'C': ['SIGMOD', 'VLDB', 'ICDE', 'KDD']
+... }
+
+>>> incidence_matrices = { 
+...    'AC': np.array([[2, 1, 0, 0], [50, 20, 0, 0], [2, 0, 1, 0], [2, 1, 0, 0], [0, 0, 1, 1]])
+... }
+
+>>> pathsim = PathSim(type_lists, incidence_matrices)
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Mike', metapath='ACA')
+'1.000'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Jim', metapath='ACA')
+'0.083'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Mary', metapath='ACA')
+'0.800'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Bob', metapath='ACA')
+'1.000'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Ann', metapath='ACA')
+'0.000'
