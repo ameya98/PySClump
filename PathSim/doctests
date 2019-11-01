@@ -3,11 +3,13 @@
 
 >>> type_lists = {
 ...    'A': ['Mike', 'Jim', 'Mary', 'Bob', 'Ann'],
-...    'C': ['SIGMOD', 'VLDB', 'ICDE', 'KDD']
+...    'C': ['SIGMOD', 'VLDB', 'ICDE', 'KDD'],
+...    'V': ['Pasadena', 'Guwahati', 'Bangalore']
 ... }
 
 >>> incidence_matrices = { 
-...    'AC': np.array([[2, 1, 0, 0], [50, 20, 0, 0], [2, 0, 1, 0], [2, 1, 0, 0], [0, 0, 1, 1]])
+...    'AC': np.array([[2, 1, 0, 0], [50, 20, 0, 0], [2, 0, 1, 0], [2, 1, 0, 0], [0, 0, 1, 1]]),
+...    'VC': np.array([[3, 1, 1, 1], [1, 0, 0, 0], [2, 1, 0, 1]])
 ... }
 
 >>> pathsim = PathSim(type_lists, incidence_matrices)
@@ -21,3 +23,14 @@
 '1.000'
 >>> '%0.3f' % pathsim.pathsim('Mike', 'Ann', metapath='ACA')
 '0.000'
+
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Mike', metapath='ACVCA')
+'1.000'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Jim', metapath='ACVCA')
+'0.082'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Mary', metapath='ACVCA')
+'0.993'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Bob', metapath='ACVCA')
+'1.000'
+>>> '%0.3f' % pathsim.pathsim('Mike', 'Ann', metapath='ACVCA')
+'0.458'
