@@ -1,5 +1,5 @@
 # SClump
-Python Implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI 2019.
+A Python Implementation of 'Spectral Clustering in Heterogeneous Information Networks' by Xiang Li, Ben Kao, Zhaochun Ren, Dawei Yin, at AAAI 2019.
 
 ## PathSim
 We use PathSim as a similarity metric between pairs of nodes.
