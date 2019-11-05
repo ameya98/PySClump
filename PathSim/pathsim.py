@@ -43,9 +43,13 @@ class PathSim:
                 num_paths_11 = metapath_matrix[index1][index1]
                 num_paths_22 = metapath_matrix[index2][index2]
 
-                similarity_matrix[index1][index2] = (2 * num_paths_12)/(num_paths_11 + num_paths_22)
+                if (num_paths_11 + num_paths_22) > 0:
+                    similarity_matrix[index1][index2] = (2 * num_paths_12)/(num_paths_11 + num_paths_22)
+                else:
+                    similarity_matrix[index1][index2] = 0
         
         self.similarity_matrices[metapath] = similarity_matrix
+        return similarity_matrix
 
     # Computes the number of paths via this metapath.
     def compute_metapath_matrix(self, metapath):
