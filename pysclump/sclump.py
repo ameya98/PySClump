@@ -8,7 +8,10 @@ import numpy as np
 from scipy.optimize import minimize
 
 # Internal dependencies.
-from utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
+try:
+    from .utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
+except ImportError:
+    from utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
 
 class SClump:
     def __init__(self, similarity_matrices, num_clusters, random_seed=0):
