@@ -8,5 +8,6 @@ python:
   - "3.8"
 install:
   - pip install -r requirements.txt
-  script:
-  - pytest --doctest-glob='doctests'
+script:
+  - cd src
+  - pytest --doctest-glob='sclump_doctests'
