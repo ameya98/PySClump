@@ -1,6 +1,13 @@
-# PySClump
-A Python implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.
+# PySClump [![Build Status](https://travis-ci.com/ameya98/PySClump.svg?token=EvToDgVLa7n6xFgyBhTU&branch=master)](https://travis-ci.com/ameya98/PySClump)
+A Python implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.  
 This was heavily inspired by the original [implementation](https://github.com/lixiang3776/SClump) in MATLAB.
+
+<figure>
+    <p align="center">
+        <img src="visualization.png">
+        <figcaption>A similarity matrix represented as a graph. Nodes are coloured according to their assigned cluster.</figcaption>
+    </p>
+</figure>
 
 ## References
 Li, Xiang and Kao, Ben and Ren, Zhaochun and Yin, Dawei. 'Spectral Clustering in Heterogeneous Information Networks'. Proceedings of the AAAI Conference on Artificial Intelligence: 4221-4228.
@@ -56,4 +63,5 @@ labels, learned_similarity_matrix = sclump.run()
 ```
 
 If we have n nodes to be clustered into k clusters, *labels* is a n-by-1 vector, with entries from 0 to (k - 1) indicating the cluster index assigned. *learned_similarity_matrix* is the n-by-n matrix S referenced in the paper, indicating node-to-node similarity.
+
 The clusters themselves are assigned by k++-means clustering using the learned similarity matrix.
