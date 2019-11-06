@@ -8,5 +8,5 @@ python:
 install:
   - pip install -r requirements.txt
 script:
-  - cd src
+  - cd pysclump
   - python -m pytest --doctest-glob='sclump_doctests'
