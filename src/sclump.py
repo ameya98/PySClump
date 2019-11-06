@@ -8,7 +8,7 @@ import numpy as np
 from scipy.optimize import minimize
 
 # Internal dependencies.
-from utils import eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
+from utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
 
 class SClump:
     def __init__(self, similarity_matrices, num_clusters, random_seed=0):
@@ -41,13 +41,13 @@ class SClump:
         self.num_metapaths = len(similarity_matrices)
         
 
-    def run(self):
+    def run(self, verbose=False):
         """
-        Returns:
+        Returns a tuple of:
         * labels: The predicted cluster labels for each node.
         * similarity: The learnt similarity matrix, from the optimization procedure.
         """
-        similarity_matrix = self.optimize()
+        similarity_matrix = self.optimize(verbose=verbose)
         labels = self.cluster(similarity_matrix)
 
         return labels, similarity_matrix
@@ -61,7 +61,7 @@ class SClump:
         return KMeans(self.num_clusters, n_init=10, random_state=self.random_seed).fit_predict(feature_matrix)
 
 
-    def optimize(self, num_iterations=20, alpha=0.5, beta=10, gamma=0.01):
+    def optimize(self, num_iterations=20, alpha=0.5, beta=10, gamma=0.01, verbose=False):
         """
         Learn weights to optimize the similarity matrix.
        
@@ -82,9 +82,17 @@ class SClump:
         # Initialize.
         S = W
 
-        # Iterate
+        # Iterate.
         for iteration in range(num_iterations):
             
+            if verbose:
+                loss = np.trace(np.matmul((S - W).T, (S - W))) 
+                loss += self.alpha * np.trace(np.matmul(S.T, S))
+                loss += self.beta * np.dot(lambdas, lambdas)
+                loss += self.gamma * np.sum(eigenvalues(normalized_laplacian(S), num=self.num_clusters))
+
+                print('Iteration %d: Loss = %0.3f' % (iteration, loss))
+
             # Update F.
             F = self.optimize_F(S)
 
@@ -94,7 +102,7 @@ class SClump:
             # Update lambdas.
             lambdas = self.optimize_lambdas(S, lambdas)
 
-            # Recompute
+            # Recompute W.
             W = np.tensordot(lambdas, self.similarity_matrices, axes=[[0], [0]])
 
         return S
@@ -103,7 +111,7 @@ class SClump:
     # Optimize F, keeping S fixed.
     def optimize_F(self, S):
         LS = normalized_laplacian(S)    
-        return eigenvectors(LS, num_eigenvectors=self.num_clusters)
+        return eigenvectors(LS, num=self.num_clusters)
 
 
     # Optimize S, keeping W and F fixed.
