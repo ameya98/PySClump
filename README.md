@@ -66,3 +66,10 @@ labels, learned_similarity_matrix = sclump.run()
 If we have n nodes to be clustered into k clusters, *labels* is a n-by-1 vector, with entries from 0 to (k - 1) indicating the cluster index assigned. *learned_similarity_matrix* is the n-by-n matrix S referenced in the paper, indicating node-to-node similarity.
 
 The clusters themselves are assigned by k++-means clustering using the learned similarity matrix.
+
+## Acknowledgements
+This would not have been possible without the assistance of my CS502 teammates at IIT Guwahati: 
+* Yagyansh Bhatia ([yagyanshbhatia](https://github.com/yagyanshbhatia))
+* Dhananjay Shukla ([dshukla1997](https://github.com/dshukla1997))
+
+Credit for visualization is completely due to Ramyani Ghosh ([ramyani-ghosh](https://github.com/ramyani-ghosh)).
