@@ -1,5 +1,6 @@
 >>> from PathSim.pathsim import PathSim 
 >>> from sclump import SClump
+>>> from utils import best_simplex_projection
 >>> import numpy as np
 
 >>> type_lists = {
@@ -29,3 +30,20 @@ True
 True
 >>> np.all(learned_similarity_matrix <= 1)
 True
+
+>>> '%s' % best_simplex_projection([1, 0])
+'[1. 0.]'
+>>> '%s' % best_simplex_projection([0.7, 0.3])
+'[0.7 0.3]'
+>>> '%s' % best_simplex_projection([0.5, 0.5])
+'[0.5 0.5]'
+>>> '%s' % best_simplex_projection([0, 1])
+'[0. 1.]'
+>>> '%s' % best_simplex_projection([0.3, 0.2, 0.4, 0.1])
+'[0.3 0.2 0.4 0.1]'
+>>> '%s' % best_simplex_projection([2, 0])
+'[1. 0.]'
+>>> '%s' % best_simplex_projection([0.3, 0.2, 0.5, 0.1])
+'[0.275 0.175 0.475 0.075]'
+>>> '%s' % best_simplex_projection([-0.1, 1])
+'[0. 1.]'
