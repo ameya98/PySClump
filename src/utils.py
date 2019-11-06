@@ -7,13 +7,18 @@ import scipy as sc
 
 
 # Returns the top eigenvectors (according to increasing eigenvalues) of a symmetric matrix.
-def eigenvectors(matrix, num_eigenvectors=1):
-    return sc.linalg.eigh(matrix, eigvals=(0, num_eigenvectors - 1))[1]
+def eigenvectors(matrix, num=1):
+    return sc.linalg.eigh(matrix, eigvals=(0, num - 1))[1]
+
+
+# Returns the smallest eigenvalues of a symmetric matrix.
+def eigenvalues(matrix, num=1):
+    return sc.linalg.eigh(matrix, eigvals=(0, num - 1))[0]
 
 
 # Returns the normalized Laplacian for a given similarity matrix.
 def normalized_laplacian(similarity_matrix):
-    A = similarity_matrix
+    A = (similarity_matrix + similarity_matrix.T)/2
     R = np.sum(A, axis=1)
     R_minus_half = 1/np.sqrt(R)
     D_minus_half = np.diag(R_minus_half)
@@ -23,7 +28,7 @@ def normalized_laplacian(similarity_matrix):
 
 # Returns the unnormalized Laplacian for a given similarity matrix.
 def unnormalized_laplacian(similarity_matrix):
-    A = similarity_matrix
+    A = (similarity_matrix + similarity_matrix.T)/2
     R = np.sum(A, axis=1)
     D = np.diag(R)
     return D - A
