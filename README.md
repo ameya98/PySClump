@@ -56,5 +56,5 @@ sclump = SClump(similarity_matrices, num_clusters=2)
 labels, learned_similarity_matrix = sclump.run()
 ```
 
-If we have `n` nodes to be clustered into `k` clusters, *labels* is a `n`-by-1 vector, with entries from `0` to `k - 1` indicating the cluster index assigned.   
-The clusters themselves are assigned by k++-means clustering using the learned similarity matrix (of dimension `n`-by-`n`). 
+If we have n nodes to be clustered into k clusters, *labels* is a n-by-1 vector, with entries from 0 to (k - 1) indicating the cluster index assigned. *learned_similarity_matrix* is the n-by-n matrix S referenced in the paper, indicating node-to-node similarity.
+The clusters themselves are assigned by k++-means clustering using the learned similarity matrix.
