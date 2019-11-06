@@ -93,3 +93,16 @@ class SClump:
             W = np.tensordot(lambdas, self.similarity_matrices, axes=[[0], [0]])
 
         return S
+
+    # We write the optimization objective as lambda^T Q lambda. 
+    # Return Q.
+    def lambda_optimizer(self):
+        Q = np.zeros((self.num_metapaths, self.num_metapaths))
+        
+        Q += np.trace(np.matmul(W.T, W))
+        Q -= 2 * np.trace(np.matmul(S.T, W))
+        Q += beta * lambdas.T * lambdas
+
+        return Q
+    
+
