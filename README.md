@@ -22,7 +22,7 @@ pip install pysclump
 We provide PathSim as a similarity metric between pairs of nodes. However, PySClump works with any similarity metric! See the SClump section below.
 
 ```
-from pathsim import PathSim
+from pysclump import PathSim
 import numpy as np
 
 type_lists = {
@@ -49,6 +49,8 @@ ps.compute_similarity_matrix(metapath='ACVCA')
 ## SClump
 Once we have the similarity matrices (PathSim shown here), running SClump is really simple.
 ```
+from pysclump import SClump
+
 # Construct similarity matrices.
 similarity_matrices = {
     'ACA': pathsim.compute_similarity_matrix(metapath='ACA'),
