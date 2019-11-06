@@ -1,0 +1,31 @@
+>>> from PathSim.pathsim import PathSim 
+>>> from sclump import SClump
+>>> import numpy as np
+
+>>> type_lists = {
+...    'A': ['Mike', 'Jim', 'Mary', 'Bob', 'Ann'],
+...    'C': ['SIGMOD', 'VLDB', 'ICDE', 'KDD'],
+...    'V': ['Pasadena', 'Guwahati', 'Bangalore']
+... }
+
+>>> incidence_matrices = { 
+...    'AC': np.array([[2, 1, 0, 0], [50, 20, 0, 0], [2, 0, 1, 0], [2, 1, 0, 0], [0, 0, 1, 1]]),
+...    'VC': np.array([[3, 1, 1, 1], [1, 0, 0, 0], [2, 1, 0, 1]])
+... }
+
+>>> pathsim = PathSim(type_lists, incidence_matrices)
+>>> similarity_matrices = {
+...    'ACA': pathsim.compute_similarity_matrix(metapath='ACA'),
+...    'ACVCA': pathsim.compute_similarity_matrix(metapath='ACVCA'),
+... }
+
+>>> sclump = SClump(similarity_matrices, num_clusters=2)
+>>> labels, learned_similarity_matrix = sclump.run()
+>>> np.sum(np.logical_and(labels != 0, labels != 1)) == 0
+True
+>>> learned_similarity_matrix.shape == (5, 5)
+True
+>>> np.all(learned_similarity_matrix >= 0)
+True
+>>> np.all(learned_similarity_matrix <= 1)
+True
