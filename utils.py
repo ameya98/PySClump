@@ -15,7 +15,7 @@ def eigenvectors(matrix, num_eigenvectors=1):
 def normalized_laplacian(similarity_matrix):
     A = similarity_matrix
     R = np.sum(A, axis=1)
-    R_minus_half = 1/sqrt(R)
+    R_minus_half = 1/np.sqrt(R)
     D_minus_half = np.diag(R_minus_half)
     I = np.eye(A.shape[0])
     return I - D_minus_half * A * D_minus_half
@@ -31,7 +31,7 @@ def unnormalized_laplacian(similarity_matrix):
 
 # Returns the pairwise distance between the row-wise vectors (representing samples).
 def distance_matrix(matrix, metric):
-    scipy.spatial.distance.pdist(matrix, metric=metric)
+    return sc.spatial.distance.squareform(sc.spatial.distance.pdist(matrix, metric=metric))
 
 
 # Solves the sparse simplex reconstruction problem for a vector, v.
@@ -40,7 +40,7 @@ def best_simplex_projection(vector, num_iterations=100):
 
     # Compute quantities.
     v = vector
-    n = v.size()
+    n = v.size
     u = v - np.mean(v) + np.ones(n)/n
 
     if np.min(u) < 0:
