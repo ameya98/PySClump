@@ -2,12 +2,11 @@
 A Python implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.  
 This was heavily inspired by the original [implementation](https://github.com/lixiang3776/SClump) in MATLAB.
 
-<figure>
-    <p align="center">
-        <img src="visualization.png">
-        <figcaption>A similarity matrix represented as a graph. Nodes are coloured according to their assigned cluster.</figcaption>
-    </p>
-</figure>
+<p align="center">
+    <img width=600 src="visualization.png">
+</p>
+
+*Figure: A similarity matrix represented as a graph. Nodes are coloured according to their assigned cluster.*
 
 ## References
 Li, Xiang and Kao, Ben and Ren, Zhaochun and Yin, Dawei. 'Spectral Clustering in Heterogeneous Information Networks'. Proceedings of the AAAI Conference on Artificial Intelligence: 4221-4228.
