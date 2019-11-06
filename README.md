@@ -1,9 +1,8 @@
 # PySClump
-A Python Implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.
-
+A Python implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.
 This was heavily inspired by the original [implementation](https://github.com/lixiang3776/SClump) in MATLAB.
 
-## Reference
+## References
 Li, Xiang and Kao, Ben and Ren, Zhaochun and Yin, Dawei. 'Spectral Clustering in Heterogeneous Information Networks'. Proceedings of the AAAI Conference on Artificial Intelligence: 4221-4228.
 
 ## Installation
@@ -30,7 +29,7 @@ incidence_matrices = {
    'VC': np.array([[3, 1, 1, 1], [1, 0, 0, 0], [2, 1, 0, 1]])
 }
 
-# Create PathSim object.
+# Create PathSim instance.
 ps = PathSim(type_lists, incidence_matrices)
 
 # Get the similarity between two authors (indicated by type 'A').
