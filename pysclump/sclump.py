@@ -10,7 +10,7 @@ from scipy.optimize import minimize
 # Internal dependencies.
 try:
     from .utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
-except ImportError:
+except (ImportError, ValueError, SystemError):
     from utils import eigenvalues, eigenvectors, normalized_laplacian, distance_matrix, best_simplex_projection
 
 class SClump:
