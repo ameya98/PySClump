@@ -39,7 +39,7 @@ def distance_matrix(matrix, metric):
 def best_simplex_projection(vector, num_iterations=100):
 
     # Compute quantities.
-    v = vector
+    v = np.array(vector)
     n = v.size
     u = v - np.mean(v) + np.ones(n)/n
 
@@ -49,7 +49,7 @@ def best_simplex_projection(vector, num_iterations=100):
         multiplier = 0
         iteration = 0
 
-        while np.abs(f) > 1e-10 and iteration < num_iterations:
+        while np.abs(func) > 1e-10 and iteration < num_iterations:
             alpha_uncut = u - multiplier
             indices = (alpha_uncut > 0)
             
@@ -60,7 +60,7 @@ def best_simplex_projection(vector, num_iterations=100):
             # Newton's rule update.
             multiplier = multiplier - func/func_deriv    
 
-        alpha = np.max(alpha, 0)
+        alpha = np.maximum(alpha_uncut, 0)
 
     else:
         alpha = u
