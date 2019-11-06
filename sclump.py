@@ -7,7 +7,7 @@ from sklearn.cluster import KMeans
 import numpy as np
 
 # Internal dependencies.
-from utils import eigenvectors, laplacian
+from utils import eigenvectors, normalized_laplacian, distance_matrix
 
 class SClump:
     def __init__(self, similarity_matrices, num_clusters, random_seed=0):
@@ -34,6 +34,7 @@ class SClump:
         self.similarity_matrices = np.array(self.similarity_matrices)
         self.num_metapaths = len(similarity_matrices)
 
+
     def run(self):
         """
         Returns a dictionary of:
@@ -56,25 +57,38 @@ class SClump:
         """
         return KMeans(self.num_clusters, random_state=self.random_seed).fit_transform(feature_matrix)
 
+
     def optimize(self, num_iterations=20):
         """
         Learn weights to optimize the similarity matrix.
         """
+        # Coefficients for the Frobenius norm of S, L2-norm of lambda, and trace of LS respectively.
+        alpha = 0.5 
+        beta = 10
+        gamma = 0.01
+
+        # Weights over similarity matrices.
         lambdas = np.ones(self.num_metapaths)/self.num_metapaths
         W = np.tensordot(lambdas, self.similarity_matrices, axes=[[0], [0]])
+        
+        # Initialize.
         S = W
 
+        # Iterate
         for iteration in range(num_iterations):
             
             # Update F.
-            LS = laplacian(S)    
+            LS = normalized_laplacian(S)    
             F = eigenvectors(LS, num_eigenvectors=self.num_clusters)
 
             # Update S.
-            update_S()
+            Q = distance_matrix(F, metric='euclidean')
+            P = (2*W - gamma*Q)/(2 + 2*alpha)
+            for index in S.shape[0]:
+                S[index] = best_simplex_projection(P[index])
 
             # Update lambdas.
-            update_lambdas()
+            
 
             W = np.tensordot(lambdas, self.similarity_matrices, axes=[[0], [0]])
 
