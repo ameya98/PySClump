@@ -1,8 +1,20 @@
-# SClump
-A Python Implementation of 'Spectral Clustering in Heterogeneous Information Networks' by Xiang Li, Ben Kao, Zhaochun Ren, Dawei Yin, at AAAI 2019.
+# PySClump
+A Python Implementation of 'Spectral Clustering in Heterogeneous Information Networks' from AAAI, 2019.
+
+This was heavily inspired by the original [implementation](https://github.com/lixiang3776/SClump) in MATLAB.
+
+## Reference
+Li, Xiang and Kao, Ben and Ren, Zhaochun and Yin, Dawei. 'Spectral Clustering in Heterogeneous Information Networks'. Proceedings of the AAAI Conference on Artificial Intelligence: 4221-4228.
+
+## Installation
+PySClump is available on PyPI! Install with:
+```
+pip install pysclump
+```
 
 ## PathSim
-We use PathSim as a similarity metric between pairs of nodes.
+We provide PathSim as a similarity metric between pairs of nodes. However, PySClump works with any similarity metric! See the SClump section below.
+
 ```
 from pathsim import PathSim
 import numpy as np
@@ -27,3 +39,22 @@ ps.pathsim('Mike', 'Jim', metapath='ACA')
 # Get the similarity matrix M for the metapath.
 ps.compute_similarity_matrix(metapath='ACVCA')
 ```
+
+## SClump
+Once we have the similarity matrices (PathSim shown here), running SClump is really simple.
+```
+# Construct similarity matrices.
+similarity_matrices = {
+    'ACA': pathsim.compute_similarity_matrix(metapath='ACA'),
+    'ACVCA': pathsim.compute_similarity_matrix(metapath='ACVCA'),
+}
+
+# Create SClump instance.
+sclump = SClump(similarity_matrices, num_clusters=2)
+
+# Run the algorithm!
+labels, learned_similarity_matrix = sclump.run()
+```
+
+If we have `n` nodes to be clustered into `k` clusters, *labels* is a `n`-by-1 vector, with entries from `0` to `k - 1` indicating the cluster index assigned.   
+The clusters themselves are assigned by k++-means clustering using the learned similarity matrix (of dimension `n`-by-`n`). 
