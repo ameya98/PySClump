@@ -10,4 +10,4 @@ install:
   - pip install -r requirements.txt
 script:
   - cd src
-  - pytest --doctest-glob='sclump_doctests'
+  - python -m pytest --doctest-glob='sclump_doctests'
