@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pysclump",
-    version="0.0.3",
+    version="0.0.4",
     author="Ameya Daigavane",
     author_email="ameya.d.98@gmail.com",
     description="SClump implemented in Python.",
