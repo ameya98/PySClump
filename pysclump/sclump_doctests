@@ -22,8 +22,6 @@
 
 >>> sclump = SClump(similarity_matrices, num_clusters=2)
 >>> labels, learned_similarity_matrix, metapath_weights = sclump.run()
->>> print(metapath_weights)
-
 >>> np.sum(np.logical_and(labels != 0, labels != 1)) == 0
 True
 >>> learned_similarity_matrix.shape == (5, 5)
