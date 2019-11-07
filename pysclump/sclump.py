@@ -44,16 +44,28 @@ class SClump:
         self.num_metapaths = len(similarity_matrices)
         
 
-    def run(self, verbose=False):
+    def run(self, verbose=False, cluster_using='similarity'):
         """
         Returns a tuple of:
         * labels: The predicted cluster labels for each node.
         * similarity: The learnt similarity matrix, from the optimization procedure.
+        * metapath_weights: A dictionary of learnt weights for each metapath's associated similarity matrix.
         """
-        similarity_matrix = self.optimize(verbose=verbose)
-        labels = self.cluster(similarity_matrix)
+        if cluster_using not in ['similarity', 'laplacian']:
+            raise ValueError('Invalid option for parameter \'cluster_using\'.')
 
-        return labels, similarity_matrix
+        similarity_matrix, metapath_weights = self.optimize(verbose=verbose)
+
+        if cluster_using == 'similarity':
+            labels = self.cluster(similarity_matrix)
+
+        elif cluster_using == 'laplacian':
+            laplacian = normalized_laplacian(similarity_matrix)
+            labels = self.cluster(eigenvectors(laplacian, num=self.num_clusters))
+
+        metapath_weights_dict = {metapath: metapath_weights[index] for metapath, index in self.metapath_index.items()}
+        
+        return labels, similarity_matrix, metapath_weights_dict
     
     
     def cluster(self, feature_matrix):
@@ -108,7 +120,7 @@ class SClump:
             # Recompute W.
             W = np.tensordot(lambdas, self.similarity_matrices, axes=[[0], [0]])
 
-        return S
+        return S, lambdas
 
 
     # Optimize F, keeping S fixed.

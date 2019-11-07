@@ -60,15 +60,15 @@ similarity_matrices = {
 sclump = SClump(similarity_matrices, num_clusters=2)
 
 # Run the algorithm!
-labels, learned_similarity_matrix = sclump.run()
+labels, learned_similarity_matrix, metapath_weights = sclump.run()
 ```
 
 If we have n nodes to be clustered into k clusters, *labels* is a n-by-1 vector, with entries from 0 to (k - 1) indicating the cluster index assigned. *learned_similarity_matrix* is the n-by-n matrix S referenced in the paper, indicating node-to-node similarity.
 
-The clusters themselves are assigned by k++-means clustering using the learned similarity matrix.
+The clusters themselves are assigned by k++-means clustering either on the similarity matrix directly, or on the Laplacian of the learned similarity matrix.
 
 ## Acknowledgements
-This would not have been possible without the assistance of my CS502 teammates at IIT Guwahati: 
+This would not have been possible without the assistance of my CS529 teammates at IIT Guwahati: 
 * Yagyansh Bhatia ([yagyanshbhatia](https://github.com/yagyanshbhatia))
 * Dhananjay Shukla ([dshukla1997](https://github.com/dshukla1997))
 
