@@ -20,7 +20,7 @@ pip install pysclump
 ## PathSim
 We provide PathSim as a similarity metric between pairs of nodes. However, PySClump works with any similarity metric! See the SClump section below.
 
-```
+```python
 from pysclump import PathSim
 import numpy as np
 
