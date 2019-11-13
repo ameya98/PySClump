@@ -47,7 +47,7 @@ ps.compute_similarity_matrix(metapath='ACVCA')
 
 ## SClump
 Once we have the similarity matrices (PathSim shown here), running SClump is really simple.
-```
+```python
 from pysclump import SClump
 
 # Construct similarity matrices.
